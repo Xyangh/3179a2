@@ -1,0 +1,91 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "title": "QS WORLD UNIVERSITY RANKINGS",
+    "width": 900,
+    "height": 500,
+    "data": {
+      "url": "https://raw.githubusercontent.com/Xyangh/3179a2/main/ass2/data/ne_10m_admin_0_map_units.json",
+      "format": {"type": "topojson", "feature": "ne_10m_admin_0_map_units"}
+    },
+    "projection": {"type": "equirectangular"},
+    "layer": [
+      {
+        "data": {
+          "url": "https://raw.githubusercontent.com/FIT3179/Vega-Lite/main/7_others/oceans.topojson",
+          "format": {"type": "topojson", "feature": "oceans"}
+        },
+        "mark": {"type": "geoshape", "fill": "skyblue"}
+      },
+      {
+          "data": {
+            "url": "https://raw.githubusercontent.com/FIT3179/Vega-Lite/main/2_symbol_map/js/WorldMapWithGraticules.topojson",
+            "format": {"type": "topojson", "feature": "ne_110m_graticules_30"}
+          },
+          "mark": {"type": "geoshape", "fill": null, "stroke": "lightgray"}
+        },
+      {
+        "mark": {"type": "geoshape", "fill": "lightgray", "stroke": "white"},
+        "encoding": {
+          "tooltip": [
+            {"field": "properties.NAME", "type": "nominal", "title": "Country"}
+          ]
+        }
+      },
+      {
+        "data": {
+          "url": "https://raw.githubusercontent.com/Xyangh/3179a2/main/ass2/data/2024_QSWorld_University_Rankings.csv"
+        },
+        "transform": [
+          {
+            "aggregate": [
+              {"op": "count", "field": "Country", "as": "Country_count"},
+              {"op": "average", "field": "AGE", "as": "Avg_AGE"},
+              {"op": "average", "field": "Academic Reputation Score", "as": "Avg_ARS"},
+              {"op": "average", "field": "Employer Reputation Score", "as": "Avg_ERS"},
+              {"op": "average", "field": "Faculty Student Score", "as": "Avg_FSS"},
+              {"op": "average", "field": "Employment Outcomes Score", "as": "Avg_EOS"},
+              {"op": "average", "field": "Overall SCORE", "as": "Avg_OS"}
+            ],
+            "groupby": ["Country"]
+          },
+          {
+            "lookup": "Country",
+            "from": {
+              "data": {
+                "url": "https://raw.githubusercontent.com/Xyangh/3179a2/main/ass2/data/ne_10m_admin_0_map_units.json",
+                "format": {"type": "topojson", "feature": "ne_10m_admin_0_map_units"}
+              },
+              "key": "properties.NAME"
+            },
+            "as": "geo",
+            "default": {"Country": "N/A", "Country_count": 0, "Avg_SIZE": null, "Avg_AGE": null}
+          }
+        ],
+        "mark": {"type": "geoshape", "stroke": "white"},
+        "encoding": {
+          "shape": {"field": "geo", "type": "geojson"},
+          "color": {
+            "field": "Country_count",
+            "type": "quantitative",
+            "scale": {
+              "type": "threshold",
+              "domain": [0, 1, 10, 50, 100],
+              "range": ["#f0f0f0", "#fdbe85", "#fd8d3c", "#e6550d", "#a63603"]
+            }
+          },
+          "tooltip": [
+            {"field": "Country", "type": "nominal", "title": "Country"},
+            {"field": "Country_count", "type": "quantitative", "title": "Number of Universities"},
+            {"field": "Avg_AGE", "type": "quantitative", "title": "Average Age"},
+            {"field": "Avg_SIZE", "type": "quantitative", "title": "Average Size"},
+            {"field": "Avg_SIZE", "type": "quantitative", "title": "Average Size"},
+            {"field": "Avg_SIZE", "type": "quantitative", "title": "Average Size"},
+            {"field": "Avg_SIZE", "type": "quantitative", "title": "Average Size"},
+          ]
+        }
+      }
+    ]
+  }
+  
+  
+  

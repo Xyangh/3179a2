@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  
+  <script src="https://cdn.jsdelivr.net/npm/vega@5.22.1"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.5.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.21.0"></script>
+
+  <link rel="stylesheet" type="text/css" href="css/week9map.css" media="all">
+
+</head>
+<body>
+
+<div id="week9map"></div>
+
+<script type="text/javascript">
+
+  var spec2 = "js/week9map.vg.json";
+  vegaEmbed('#week9map', spec2).then(function(result) {
+    // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+  }).catch(console.error);
+</script>
+
+</body>
+</html>

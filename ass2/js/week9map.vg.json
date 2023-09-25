@@ -38,7 +38,7 @@
       "transform": [
         {
           "aggregate": [
-            {"op": "count", "field": "Country", "as": "Country_count"},
+            {"op": "count", "field": "Country", "as": "Num of Universities"},
             {"op": "average", "field": "AGE", "as": "Avg_AGE"},
             {"op": "average", "field": "Academic Reputation Score", "as": "Avg_ARS"},
             {"op": "average", "field": "Employer Reputation Score", "as": "Avg_ERS"},
@@ -65,7 +65,7 @@
       "encoding": {
         "shape": {"field": "geo", "type": "geojson"},
         "color": {
-          "field": "Country_count",
+          "field": "Num of Universities",
           "type": "quantitative",
           "scale": {
             "type": "threshold",

@@ -7,7 +7,148 @@
     "url": "https://raw.githubusercontent.com/Xyangh/3179a2/main/ass2/data/ne_50m_admin_0_countries.json",
     "format": {"type": "topojson", "feature": "ne_50m_admin_0_countries"}
   },
-  "projection": {"type": "equirectangular"},
+  "projection": {"type": "equirectangular",  "scale": {"expr": "zoom_level"},
+    "center": {"expr": "center_to"}},
+  
+  "params": [
+  {
+      "name": "zoom_level",
+      "value": 150,
+      "bind": {
+        "input": "range",
+        "min": 150,
+        "max": 1000,
+        "step": 50,
+        "name": "Zoom: "
+      }
+    },
+    {
+      "name": "center_to",
+      "value": [0, 0],
+      "bind": {
+        "input": "select",
+        "options": [
+          [0,0],
+          [100.6197, 34.0479],
+          [34.5085, -8.7832],
+          [-105.2551, 54.5260],
+          [-55.5915, -8.7832],
+          [15.2551, 54.5260],
+          [140.0188, -22.7359]
+        ],
+        "labels": ["All","Asia", "Africa", "North America", "South America","Europe","Oceania"],
+        "name": "Map Centre: "
+      }
+    },
+  {
+    "name": "selectedCountry",
+    "bind": {
+      "input": "select",
+      "options": [
+        "All",
+        "Argentina",
+        "Australia",
+        "Austria",
+        "Bahrain",
+        "Bangladesh",
+        "Belarus",
+        "Belgium",
+        "Brunei",
+        "Brazil",
+        "Canada",
+        "Chile",
+        "China",
+        "Colombia",
+        "Costa Rica",
+        "Croatia",
+        "Cuba",
+        "Cyprus",
+        "Czechia",
+        "Denmark",
+        "Ecuador",
+        "Egypt",
+        "Estonia",
+        "Ethiopia",
+        "Finland",
+        "France",
+        "Georgia",
+        "Germany",
+        "Greece",
+        "Hong Kong",
+        "Hungary",
+        "India",
+        "Indonesia",
+        "Iran",
+        "Ireland",
+        "Israel",
+        "Italy",
+        "Japan",
+        "Jordan",
+        "Kazakhstan",
+        "Kuwait",
+        "Kyrgyzstan",
+        "Latvia",
+        "Lebanon",
+        "Lithuania",
+        "Luxembourg",
+        "Macao",
+        "Malaysia",
+        "Malta",
+        "Mexico",
+        "Netherlands",
+        "New Zealand",
+        "Norway",
+        "Oman",
+        "Pakistan",
+        "Panama",
+        "Peru",
+        "Philippines",
+        "Poland",
+        "Portugal",
+        "Qatar",
+        "Romania",
+        "Russia",
+        "Saudi Arabia",
+        "Serbia",
+        "Singapore",
+        "Slovakia",
+        "Slovenia",
+        "South Africa",
+        "South Korea",
+        "Spain",
+        "Sweden",
+        "Switzerland",
+        "Taiwan",
+        "Thailand",
+        "Turkey",
+        "Tunisia",
+        "Uganda",
+        "Ukraine",
+        "United Arab Emirates",
+        "United Kingdom",
+        "United States of America",
+        "Uruguay",
+        "Venezuela",
+        "Vietnam"
+
+      ],
+      "name": "Select Country"
+    },
+    "value": "All"
+  },
+  {
+    "name": "selectedRank",
+    "bind": {
+      "input": "range",
+      "min": 1,
+      "max": 1000,
+      "step": 1,
+      "name": "2024 University Ranking (Top)"
+    },
+    "value": 1000
+  }
+],
+
   "layer": [
     {
       "data": {
@@ -17,12 +158,12 @@
       "mark": {"type": "geoshape", "fill": "#64A8D1"}
     },
     {
-        "data": {
-          "url": "https://raw.githubusercontent.com/Xyangh/3179a2/main/ass2/data/ne_50m_graticules_30.json",
-          "format": {"type": "topojson", "feature": "ne_50m_graticules_30"}
-        },
-        "mark": {"type": "geoshape", "fill": null, "stroke": "lightgray"}
+      "data": {
+        "url": "https://raw.githubusercontent.com/Xyangh/3179a2/main/ass2/data/ne_50m_graticules_30.json",
+        "format": {"type": "topojson", "feature": "ne_50m_graticules_30"}
       },
+      "mark": {"type": "geoshape", "fill": null, "stroke": "lightgray"}
+    },
     {
       "mark": {"type": "geoshape", "fill": "lightgray", "stroke": "white"},
       "encoding": {
@@ -37,13 +178,43 @@
       },
       "transform": [
         {
+          "lookup": "Country",
+          "from": {
+            "data": {
+              "url": "https://raw.githubusercontent.com/Xyangh/3179a2/main/ass2/data/ne_50m_admin_0_countries.json",
+              "format": {"type": "topojson", "feature": "ne_50m_admin_0_countries"}
+            },
+            "key": "properties.NAME",
+            "fields": ["CONTINENT"]
+          }
+        },
+        {
+          "filter": "(datum['2024 RANK'] <= selectedRank) && (selectedCountry === 'All' || datum['Country'] === selectedCountry)"
+        },
+        {
           "aggregate": [
             {"op": "count", "field": "Country", "as": "Num of Universities"},
             {"op": "average", "field": "AGE", "as": "Avg_AGE"},
-            {"op": "average", "field": "Academic Reputation Score", "as": "Avg_ARS"},
-            {"op": "average", "field": "Employer Reputation Score", "as": "Avg_ERS"},
-            {"op": "average", "field": "Faculty Student Score", "as": "Avg_FSS"},
-            {"op": "average", "field": "Employment Outcomes Score", "as": "Avg_EOS"},
+            {
+              "op": "average",
+              "field": "Academic Reputation Score",
+              "as": "Avg_ARS"
+            },
+            {
+              "op": "average",
+              "field": "Employer Reputation Score",
+              "as": "Avg_ERS"
+            },
+            {
+              "op": "average",
+              "field": "Faculty Student Score",
+              "as": "Avg_FSS"
+            },
+            {
+              "op": "average",
+              "field": "Employment Outcomes Score",
+              "as": "Avg_EOS"
+            },
             {"op": "average", "field": "Overall SCORE", "as": "Avg_OS"}
           ],
           "groupby": ["Country"]
@@ -53,7 +224,10 @@
           "from": {
             "data": {
               "url": "https://raw.githubusercontent.com/Xyangh/3179a2/main/ass2/data/ne_50m_admin_0_countries.json",
-              "format": {"type": "topojson", "feature": "ne_50m_admin_0_countries"}
+              "format": {
+                "type": "topojson",
+                "feature": "ne_50m_admin_0_countries"
+              }
             },
             "key": "properties.NAME"
           },
@@ -70,21 +244,61 @@
           "scale": {
             "type": "threshold",
             "domain": [0, 1, 10, 50, 100, 150],
-            "range": ["#fef0d9", "#fdd49e", "#fdbb84", "#fc8d59", "#e34a33","#b30000"]
+            "range": [
+              "#fef0d9",
+              "#fdd49e",
+              "#fdbb84",
+              "#fc8d59",
+              "#e34a33",
+              "#b30000"
+            ]
           }
         },
         "tooltip": [
           {"field": "Country", "type": "nominal", "title": "Country"},
-          {"field": "Country_count", "type": "quantitative", "title": "Number of Universities"},
-          {"field": "Avg_AGE", "type": "quantitative", "title": "Average Age","format":".2f"},
-          {"field": "Avg_ARS", "type": "quantitative", "title": "Average Academic Reputation Score","format":".2f"},
-          {"field": "Avg_ERS", "type": "quantitative", "title": "Average Employer Reputation Score","format":".2f"},
-          {"field": "Avg_FSS", "type": "quantitative", "title": "Average Faculty Student Score","format":".2f"},
-          {"field": "Avg_EOS", "type": "quantitative", "title": "Average Employment Outcomes Score","format":".2f"},
-          {"field": "Avg_OS", "type": "quantitative", "title": "Average Overall SCORE","format":".2f"}
+          {
+            "field": "Num of Universities",
+            "type": "quantitative",
+            "title": "Number of Universities"
+          },
+          {
+            "field": "Avg_AGE",
+            "type": "quantitative",
+            "title": "Average Age",
+            "format": ".2f"
+          },
+          {
+            "field": "Avg_ARS",
+            "type": "quantitative",
+            "title": "Average Academic Reputation Score",
+            "format": ".2f"
+          },
+          {
+            "field": "Avg_ERS",
+            "type": "quantitative",
+            "title": "Average Employer Reputation Score",
+            "format": ".2f"
+          },
+          {
+            "field": "Avg_FSS",
+            "type": "quantitative",
+            "title": "Average Faculty Student Score",
+            "format": ".2f"
+          },
+          {
+            "field": "Avg_EOS",
+            "type": "quantitative",
+            "title": "Average Employment Outcomes Score",
+            "format": ".2f"
+          },
+          {
+            "field": "Avg_OS",
+            "type": "quantitative",
+            "title": "Average Overall SCORE",
+            "format": ".2f"
+          }
         ]
       }
     }
   ]
 }
-

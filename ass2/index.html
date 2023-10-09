@@ -10,13 +10,19 @@
 
 </head>
 <body>
-
+<h1 class="center-title">Top 1000 universities in the world</h1> <!--title -->
 <div id="week9map"></div>
+<div id="barchart"></div>
 
 <script type="text/javascript">
 
-  var spec2 = "js/week9map.vg.json";
-  vegaEmbed('#week9map', spec2).then(function(result) {
+  var spec1 = "js/week9map.vg.json";
+  vegaEmbed('#week9map', spec1).then(function(result) {
+    // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+  }).catch(console.error);
+
+  var spec2 = "js/barchart.vg.json";
+  vegaEmbed('#barchart', spec2).then(function(result) {
     // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
   }).catch(console.error);
 </script>

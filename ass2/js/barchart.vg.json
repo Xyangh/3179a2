@@ -6,20 +6,45 @@
     },
     "transform": [
       {
+        "filter": "datum['2024 RANK'] <= Top_universities "
+      },
+      {
         "aggregate": [
           {
             "op": "count",
-            "as": "Number of univeristy"
+            "as": "Number of university"
           }
         ],
         "groupby": ["Country"]
       },
       {
         "window": [{"op": "rank", "as": "rank"}],
-        "sort": [{"field": "Number of univeristy", "order": "descending"}]
+        "sort": [{"field": "Number of university", "order": "descending"}]
       },
       {
-        "filter": "datum.rank <= 20"
+        "filter": "datum.rank <= Top_Countries"
+      }
+    ],
+    "params": [
+      {
+        "name": "Top_universities",
+        "value": 1000,
+        "bind": {
+          "input": "range",
+          "min": 100,
+          "max": 1000,
+          "step": 100
+        }
+      },
+      {
+        "name": "Top_Countries",
+        "value": 20,
+        "bind": {
+          "input": "range",
+          "min": 10,
+          "max": 50,
+          "step": 5
+        }
       }
     ],
     "mark": "bar",
@@ -33,7 +58,7 @@
         "sort": "-y"
       },
       "y": {
-        "field": "Number of univeristy",
+        "field": "Number of university",
         "type": "quantitative"
       },
       "tooltip": [
@@ -42,9 +67,9 @@
           "type": "ordinal"
         },
         {
-          "field": "Number of univeristy",
+          "field": "Number of university",
           "type": "quantitative"
         }
       ]
     }
-  }
+}

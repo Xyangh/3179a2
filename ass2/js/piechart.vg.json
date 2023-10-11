@@ -1,0 +1,34 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "description": "Number of top-ranked institutions by country in a radial plot for the top 100 institutions",
+    "data": {"url": "https://raw.githubusercontent.com/Xyangh/3179a2/main/ass2/data/2024_QSWorld_University_Rankings_top1000.csv", 
+    "format": {
+        "type": "csv"
+        }
+    },
+    "transform": [
+      {
+        "filter": "datum['2024 RANK'] <= 100"
+      },
+      {
+        "aggregate": [{"op": "count", "as": "Number of Univeristy"}],
+        "groupby": ["Country"]
+      },
+      {
+        "window": [{"op": "row_number", "as": "row_number"}],
+        "sort": [{"field": "Number of Univeristy", "order": "descending"}]
+      },
+      {
+        "filter": "datum.row_number <= 10"
+      }
+    ],
+    "mark": "arc",
+    "encoding": {
+      "theta": {"field": "Number of Univeristy", "type": "quantitative", "stack": true},
+      "color": {"field": "Country", "type": "nominal", "scale": {"scheme": "category20"}},
+      "tooltip": [
+        {"field": "Country", "type": "nominal"},
+        {"field": "Number of Univeristy", "type": "quantitative"}
+      ]
+    }
+  }

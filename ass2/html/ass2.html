@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QS Rank</title>
+    <p>QS Rank</p>
+    <link rel="stylesheet" href="../css/ass2.css">
+    <script src="https://cdn.jsdelivr.net/npm/vega@5.20.2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.1.1"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.17.0"></script>
+</head>
+
+<body>
+    <div id="box2">
+        <div id="week9map">
+            <script type="text/javascript">
+
+                var spec1 = "../js/week9map.vg.json";
+                vegaEmbed('#week9map', spec1).then(function(result) {
+                // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+                }).catch(console.error);
+            </script>
+        </div>
+        <h3>The map shows the number of universities each country has and its average score across different indicators.</h3>
+    </div>
+
+    <div id="box1">
+        <div id="container">
+            <select id="selectDropdown">
+                <option value="Overall SCORE">Overall SCORE</option>
+                <option value="Academic Reputation Score">Academic Reputation Score</option>
+                <option value="Employer Reputation Score">Employer Reputation Score</option>
+                <option value="Faculty Student Score">Faculty Student Score</option>
+                <option value="Citations per Faculty Score">Citations per Faculty Score</option>
+                <option value="International Students Score">International Students Score</option>
+                <option value="International Faculty Score">International Faculty Score</option>
+                <option value="Employment Outcomes Score">Employment Outcomes Score	</option>
+                <option value="Sustainability Score">Sustainability Score</option>
+                <option value="International Research Network Score">International Research Network Score</option>
+            </select>
+            <div id="vis"></div>
+            <script src="../js/barchart.vg.js"></script>
+        </div>
+
+        <div id="box11">
+            <h3>This shows the rankings of various universities according to different indicators. You can select different indicators through the drop-down menu.</h3>
+            <h3>test</h3>
+        </div>
+    </div>
+
+
+    <div id="box3">
+        <div id="barchart">
+            <script type="text/javascript">
+                var spec2 = "../js/barchart.vg.json";
+                vegaEmbed('#barchart', spec2).then(function(result) {
+                // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+                }).catch(console.error);
+            </script>
+        </div>
+        <div id="box31">
+            <div id="age">
+                <script type="text/javascript">
+                    var spec3 = "../js/age.vg.json";
+                    vegaEmbed('#age', spec3).then(function(result) {
+                    // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+                    }).catch(console.error);
+                </script>
+            </div>
+        </div>
+        <div id="box32">
+            <h3>These two graphs respectively show the number of universities in the world's top 500 owned by different countries, 
+                and provide the average age of these universities. 5 means the school has a history of more than 100 years, 4 means 50-100, 
+                3 means 25-50, 2 means 10-25, and 1 means 0-10.</h3>
+        </div>
+    </div>
+
+    <div id="box4">
+        <div id="top100">
+            <script type="text/javascript">
+                var spec4 = "../js/top100.vg.json";
+                vegaEmbed('#top100', spec4).then(function(result) {
+                // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+                }).catch(console.error);
+            </script>
+        </div>
+        <div id="top500">
+            <script type="text/javascript">
+                var spec4 = "../js/top500.vg.json";
+                vegaEmbed('#top500', spec4).then(function(result) {
+                // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+                }).catch(console.error);
+            </script>
+        </div>
+    </div>
+
+    <div id="box41">
+        <h3>There's a noticeable positive correlation between the two metrics.
+             Universities that have a higher score in employer reputation tend to also have a higher employment outcomes score. 
+             This implies that the reputation of a university among employers may influence or reflect the employment outcomes of its graduates. 
+             There are some data points (universities) with high employment outcome scores but moderate employer reputation scores. Conversely,
+              there are also universities with high employer reputation scores but middling employment outcome scores.</h3>
+    </div>
+
+</body>
+
+</html>
+
+
+
+

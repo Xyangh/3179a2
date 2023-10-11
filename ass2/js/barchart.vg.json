@@ -1,6 +1,6 @@
 {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-    "title": "Top 20 countries with top 1000 universities in the world.",
+    "title": "Countries with top 1000 universities in the world.",
     "data": {
       "url": "https://raw.githubusercontent.com/Xyangh/3179a2/main/ass2/data/2024_QSWorld_University_Rankings_top1000.csv"
     },

@@ -1,8 +1,8 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": "QS WORLD UNIVERSITY RANKINGS TOP 1000",
-  "width": 900,
-  "height": 500,
+  "width": 1200,
+  "height": 600,
   "data": {
     "url": "https://raw.githubusercontent.com/Xyangh/3179a2/main/ass2/data/ne_50m_admin_0_countries.json",
     "format": {"type": "topojson", "feature": "ne_50m_admin_0_countries"}

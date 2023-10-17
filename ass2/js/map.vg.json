@@ -156,7 +156,7 @@
         "url": "https://raw.githubusercontent.com/Xyangh/3179a2/main/ass2/data/ne_50m_ocean.json",
         "format": {"type": "topojson", "feature": "ne_50m_ocean"}
       },
-      "mark": {"type": "geoshape", "fill": "#64A8D1"}
+      "mark": {"type": "geoshape", "fill": "#669ec1"}
     },
     {
       "data": {
@@ -248,12 +248,12 @@
             "type": "threshold",
             "domain": [0, 1, 10, 50, 100, 150],
             "range": [
-              "#fef0d9",
-              "#fdd49e",
-              "#fdbb84",
-              "#fc8d59",
-              "#e34a33",
-              "#b30000"
+              "#ffffcc",
+              "#fed976",
+              "#feb24c",
+              "#fc4e2a",
+              "#e31a1c",
+              "#bd0026"
             ]
           }
         },

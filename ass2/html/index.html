@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QS Rank</title>
-    <p>QS Rank</p>
+    <title>QS Rank Data Visualization</title>
+    <p id="title">QS Rank Data Visualization</p>
     <link rel="stylesheet" href="../css/ass2.css">
     <script src="https://cdn.jsdelivr.net/npm/vega@5.20.2"></script>
     <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.1.1"></script>
@@ -14,96 +14,163 @@
 </head>
 
 <body>
-    <div id="box2">
-        <div id="week9map">
-            <script type="text/javascript">
-
-                var spec1 = "../js/week9map.vg.json";
-                vegaEmbed('#week9map', spec1).then(function(result) {
-                // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
-                }).catch(console.error);
-            </script>
-        </div>
-        <h3>The map shows the number of universities each country has and its average score across different indicators.</h3>
-    </div>
-
-    <div id="box1">
-        <div id="container">
-            <select id="selectDropdown">
-                <option value="Overall SCORE">Overall SCORE</option>
-                <option value="Academic Reputation Score">Academic Reputation Score</option>
-                <option value="Employer Reputation Score">Employer Reputation Score</option>
-                <option value="Faculty Student Score">Faculty Student Score</option>
-                <option value="Citations per Faculty Score">Citations per Faculty Score</option>
-                <option value="International Students Score">International Students Score</option>
-                <option value="International Faculty Score">International Faculty Score</option>
-                <option value="Employment Outcomes Score">Employment Outcomes Score	</option>
-                <option value="Sustainability Score">Sustainability Score</option>
-                <option value="International Research Network Score">International Research Network Score</option>
-            </select>
-            <div id="vis"></div>
-            <script src="../js/barchart.vg.js"></script>
-        </div>
-
-        <div id="box11">
-            <h3>This shows the rankings of various universities according to different indicators. You can select different indicators through the drop-down menu.</h3>
-            <h3>test</h3>
-        </div>
-    </div>
-
-
-    <div id="box3">
-        <div id="barchart">
-            <script type="text/javascript">
-                var spec2 = "../js/barchart.vg.json";
-                vegaEmbed('#barchart', spec2).then(function(result) {
-                // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
-                }).catch(console.error);
-            </script>
-        </div>
-        <div id="box31">
-            <div id="age">
+    <div class="content">
+        <h2>Map data visualization</h2>
+        <div>
+            <div id="map">
                 <script type="text/javascript">
-                    var spec3 = "../js/age.vg.json";
-                    vegaEmbed('#age', spec3).then(function(result) {
+
+                    var spec1 = "../js/map.vg.json";
+                    vegaEmbed('#map', spec1).then(function(result) {
                     // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
                     }).catch(console.error);
                 </script>
             </div>
+            <div class="text">
+                <div class="text1">
+                    <p>The map shows the number of universities in each country. 
+                        By dragging the zoom and selecting the map center, you can zoom in to the place you want to observe. 
+                        You can set the number of universities you want to choose by dragging the 2024 Universities Ranking (top). 
+                        The figure shows that the number of universities in the United States has always been ahead of the number of universities in other countries.
+                         Among the top 100 universities in the world, the United States accounts for 27, 
+                         followed by 17 universities in the United Kingdom and 9 universities in Australia.</p>
+                </div>
+            </div>
         </div>
-        <div id="box32">
-            <h3>These two graphs respectively show the number of universities in the world's top 500 owned by different countries, 
-                and provide the average age of these universities. 5 means the school has a history of more than 100 years, 4 means 50-100, 
-                3 means 25-50, 2 means 10-25, and 1 means 0-10.</h3>
-        </div>
-    </div>
+    </div>  
 
-    <div id="box4">
-        <div id="top100">
-            <script type="text/javascript">
-                var spec4 = "../js/top100.vg.json";
-                vegaEmbed('#top100', spec4).then(function(result) {
-                // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
-                }).catch(console.error);
-            </script>
+    <div class="content">
+        <h2>Number of universities by country</h2>
+        <div>
+            <div id="barchart">
+                <script type="text/javascript">
+                    var spec2 = "../js/barchart.vg.json";
+                    vegaEmbed('#barchart', spec2).then(function(result) {
+                    // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+                    }).catch(console.error);
+                </script>
+            </div>
+            <div class="text">
+                <div class="text1">
+                    <p>This bar chart can be selected by dragging Top_universities and Countries_num. 
+                        It can be found that among the top 100 universities in the world to the top 1000 universities in the world,
+                         the United States always has the largest number of universities, followed by the United Kingdom. 
+                         China and Australia have always remained in the top four.
+                          It shows that the education level of these countries is relatively high, and the number of universities is also considerable.</p>
+                </div>
+            </div>
         </div>
-        <div id="top500">
-            <script type="text/javascript">
-                var spec4 = "../js/top500.vg.json";
-                vegaEmbed('#top500', spec4).then(function(result) {
-                // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
-                }).catch(console.error);
-            </script>
-        </div>
-    </div>
+    </div>  
 
-    <div id="box41">
-        <h3>There's a noticeable positive correlation between the two metrics.
-             Universities that have a higher score in employer reputation tend to also have a higher employment outcomes score. 
-             This implies that the reputation of a university among employers may influence or reflect the employment outcomes of its graduates. 
-             There are some data points (universities) with high employment outcome scores but moderate employer reputation scores. Conversely,
-              there are also universities with high employer reputation scores but middling employment outcome scores.</h3>
-    </div>
+    <div class="content" style="height: 400px;">
+        <h2>University Subject Range and University Age</h2>
+        <div>
+            <div id="agepeicahrt" style=" float: right;">
+                <script type="text/javascript">
+                    var spec6 = "../js/agepeicahrt.vg.json";
+                    vegaEmbed('#agepeicahrt', spec6).then(function(result) {
+                    // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+                    }).catch(console.error);
+                </script>
+            </div>
+
+            <div id="piefocus" style=" float: left;">
+                <script type="text/javascript">
+                    var spec7 = "../js/piefocus.vg.json";
+                    vegaEmbed('#piefocus', spec7).then(function(result) {
+                    // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+                    }).catch(console.error);
+                </script>
+            </div>
+            <div class="text">
+                <div class="text1">
+                    <p>This is about the proportion of the world's top 100 universities in the Subject Range and the proportion of age. Full comprehensive (FC) represents All 5 faculFCty areas + medical school,
+                        Comprehensive (CO) represents All 5 faculty areas, Focused (FO) represents 3 or 4 faculty areas, Specialist (SP) represents 2 or fewer faculty areas, where age is 5=100 years old and more, 4=50-99 years old , 3=25-49 years old, 2=10-24 years old and 1=Less than 10 years old. It can be found that 80% of universities are Full Comprehensive universities among the top 100 universities in the world, and 70% of universities have a long history.</p>
+                </div>
+            </div>
+        </div>
+    </div>  
+
+    <div class="content1">
+        <h2>Globalization</h2>
+        <div>
+            <div id="globalizationstacked">
+                <script type="text/javascript">
+
+                    var spec3 = "../js/globalizationstacked.vg.json";
+                    vegaEmbed('#globalizationstacked', spec3).then(function(result) {
+                    // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+                    }).catch(console.error);
+                </script>
+            </div>
+            <div id="text2">
+                <div class="text1">
+                    <p>This chart provides a visual comparison of globalization indicators across different countries.
+                         Compares International Faculty, International Students and International Research Network. 
+                         Compared with other countries, although the United States and China have a large number of universities, their overall internationalization score does not seem to be very high.
+                          In contrast, both Australia and the UK seem to have higher internationalization scores.
+                           It shows that these countries seem to be more popular with international teachers and international students. 
+                           This also shows that universities in these countries have a large number of international students. 
+                           For students who want to study in other countries, these countries with high internationalization scores seem to be a good choice.</p>
+                </div>
+            </div>
+        </div>
+    </div> 
+
+    <div class="content">
+        <h2>Employer Satisfaction and Employment Rate Analysis</h2>
+        <div>
+            <div id="erceocheatmap">
+                <script type="text/javascript">
+
+                    var spec4 = "../js/erceocheatmap.vg.json";
+                    vegaEmbed('#erceocheatmap', spec4).then(function(result) {
+                    // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+                    }).catch(console.error);
+                </script>
+            </div>
+            <div class="text">
+                <div class="text1">
+                    <p>It is observed that as employment outcome scores increase, employer reputation scores also tend to be higher. 
+                        This shows that it seems easier for students from universities recognized by most employers to find jobs. 
+                        However, there is also some data that although the Employer Reputation scores are high, the Employment Outcomes scores do not seem to be particularly high. 
+                        These schools are very few.</p>
+                </div>
+            </div>
+        </div>
+    </div> 
+
+    <div class="content">
+        <h2>Analysis of Academic Reputation and Employment</h2>
+        <div>
+            <div id="arcerc">
+                <script type="text/javascript">
+
+                    var spec5 = "../js/arcerc.vg.json";
+                    vegaEmbed('#arcerc', spec5).then(function(result) {
+                    // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+                    }).catch(console.error);
+                </script>
+            </div>
+               
+            
+            <div class="text">
+                <div class="text1">
+                    <p>This chart screens the top 50 universities in the world. Each point in this scatter plot represents a university, and its color indicates the country to which it belongs. 
+                        The size of the dots corresponds to the college's overall score, with larger dots indicating higher scores.
+                         The academic reputation of most universities is clustered between 40-100, indicating that top universities generally perform well in academic reputation.</p>
+                    <p>For both employment outcomes and academic reputation, some universities scored higher on academic reputation but lower on employment outcomes,
+                         suggesting that a good academic reputation is not always directly related to better employment outcomes. But for employer reputation and academic reputation scores,
+                          higher academic reputation seems to have higher employer reputation. This suggests that a good academic reputation seems to be more attractive to employers.</p>
+                    <p> While higher-ranked universities generally score higher on employer reputation, employment outcomes and academic reputation, there are some exceptions,
+                         such as France's Ecole Polytechnique, which ranks among the top 50 universities globally. 
+                         It has the lowest academic reputation but has very high employer reputation scores(99.6) and employment outcomes scores (90.3).</p>
+                </div>
+            </div>
+           
+        </div>
+    </div> 
+
 
 </body>
 

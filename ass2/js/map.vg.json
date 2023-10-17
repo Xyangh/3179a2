@@ -1,13 +1,155 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": "QS WORLD UNIVERSITY RANKINGS TOP 1000",
-  "width": 900,
+  "title": "QS WORLD UNIVERSITY RANKINGS",
+  "width": 850,
   "height": 500,
   "data": {
     "url": "https://raw.githubusercontent.com/Xyangh/3179a2/main/ass2/data/ne_50m_admin_0_countries.json",
     "format": {"type": "topojson", "feature": "ne_50m_admin_0_countries"}
   },
-  "projection": {"type": "equirectangular"},
+  "projection": {"type": "equirectangular",  "scale": {"expr": "zoom_level"},
+    "center": {"expr": "center_to"}},
+  
+  "params": [
+  {
+      "name": "zoom_level",
+      "value": 150,
+      "bind": {
+        "input": "range",
+        "min": 150,
+        "max": 1000,
+        "step": 50,
+        "name": "Zoom: "
+      }
+    },
+    {
+      "name": "center_to",
+      "value": [0, 0],
+      "bind": {
+        "input": "select",
+        "options": [
+          [0,0],
+          [100.6197, 34.0479],
+          [34.5085, -8.7832],
+          [-105.2551, 54.5260],
+          [-55.5915, -8.7832],
+          [15.2551, 54.5260],
+          [140.0188, -22.7359]
+        ],
+        "labels": ["All","Asia", "Africa", "North America", "South America","Europe","Oceania"],
+        "name": "Map Centre: "
+      }
+    },
+  {
+    "name": "selectedCountry",
+    "bind": {
+      "input": "select",
+      "options": [
+        "All",
+        "Argentina",
+        "Australia",
+        "Austria",
+        "Bahrain",
+        "Bangladesh",
+        "Belarus",
+        "Belgium",
+        "Brunei",
+        "Brazil",
+        "Canada",
+        "Chile",
+        "China",
+        "Colombia",
+        "Costa Rica",
+        "Croatia",
+        "Cuba",
+        "Cyprus",
+        "Czechia",
+        "Denmark",
+        "Ecuador",
+        "Egypt",
+        "Estonia",
+        "Ethiopia",
+        "Finland",
+        "France",
+        "Georgia",
+        "Germany",
+        "Greece",
+        "Hong Kong",
+        "Hungary",
+        "India",
+        "Indonesia",
+        "Iran",
+        "Ireland",
+        "Israel",
+        "Italy",
+        "Japan",
+        "Jordan",
+        "Kazakhstan",
+        "Kuwait",
+        "Kyrgyzstan",
+        "Latvia",
+        "Lebanon",
+        "Lithuania",
+        "Luxembourg",
+        "Macao",
+        "Malaysia",
+        "Malta",
+        "Mexico",
+        "Netherlands",
+        "New Zealand",
+        "Norway",
+        "Oman",
+        "Pakistan",
+        "Panama",
+        "Peru",
+        "Philippines",
+        "Poland",
+        "Portugal",
+        "Qatar",
+        "Romania",
+        "Russia",
+        "Saudi Arabia",
+        "Serbia",
+        "Singapore",
+        "Slovakia",
+        "Slovenia",
+        "South Africa",
+        "South Korea",
+        "Spain",
+        "Sweden",
+        "Switzerland",
+        "Taiwan",
+        "Thailand",
+        "Turkey",
+        "Tunisia",
+        "Uganda",
+        "Ukraine",
+        "United Arab Emirates",
+        "United Kingdom",
+        "United States of America",
+        "Uruguay",
+        "Venezuela",
+        "Vietnam"
+
+      ],
+      "name": "Select Country"
+      
+    },
+    "value": "All"
+  },
+  {
+    "name": "selectedRank",
+    "bind": {
+      "input": "range",
+      "min": 1,
+      "max": 1000,
+      "step": 1,
+      "name": "2024 University Ranking (Top)"
+    },
+    "value": 100
+  }
+],
+
   "layer": [
     {
       "data": {
@@ -33,9 +175,25 @@
     },
     {
       "data": {
-        "url": "https://raw.githubusercontent.com/Xyangh/3179a2/main/ass2/data/2024_QSWorld_University_Rankings_top1000.csv"
+        "url": "https://raw.githubusercontent.com/Xyangh/3179a2/main/ass2/data/2024_QSWorld_University_Rankings_top1000.csv",
+        "format": {"type": "csv"}  
       },
       "transform": [
+        {
+          "lookup": "Country",
+          "from": {
+            "data": {
+              "url": "https://raw.githubusercontent.com/Xyangh/3179a2/main/ass2/data/ne_50m_admin_0_countries.json",
+              "format": {"type": "topojson", "feature": "ne_50m_admin_0_countries"}
+            },
+            
+            "key": "properties.NAME",
+            "fields": ["CONTINENT"]
+          }
+        },
+        {
+          "filter": "(datum['2024 RANK'] <= selectedRank) && (selectedCountry === 'All' || datum['Country'] === selectedCountry)"
+        },
         {
           "aggregate": [
             {"op": "count", "field": "Country", "as": "Num of Universities"},
@@ -80,7 +238,7 @@
           "default": {"Country": "N/A"}
         }
       ],
-      "mark": {"type": "geoshape", "stroke": "white"},
+      "mark": {"type": "geoshape", "stroke": "white","zindex": -10},
       "encoding": {
         "shape": {"field": "geo", "type": "geojson"},
         "color": {
@@ -143,6 +301,27 @@
             "format": ".2f"
           }
         ]
+      }
+    },
+     {
+      "data": {
+        "values": [
+          {"name": "United States of America", "lon": -98.583333, "lat": 39.833333},
+          {"name": "Canada", "lon": -106.346771, "lat": 56.130366},
+          {"name": "China", "lon": 104.195397, "lat": 35.861660},
+          {"name": "Australia", "lon": 133.775136, "lat": -25.274398},
+          {"name": "Russia", "lon": 105.318756, "lat": 61.524010},
+          {"name": "United Kingdom", "lon": -3.435973, "lat": 55.378051}
+        ]
+      },
+      "mark": "text",
+      "encoding": {
+        "text": {"field": "name", "type": "nominal"},
+        "longitude": {"field": "lon", "type": "quantitative"},
+        "latitude": {"field": "lat", "type": "quantitative"},
+        "color": {"value": "black"},
+        "opacity": {"value": 1},
+        "size": {"value": 12}
       }
     }
   ]

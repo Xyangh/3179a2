@@ -1,8 +1,11 @@
 {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-    "title": "Countries with top 1000 universities in the world.",
+    "title": "Countries Whith Universities Number.",
+    "width": 800,
+    "height": 200,
     "data": {
-      "url": "https://raw.githubusercontent.com/Xyangh/3179a2/main/ass2/data/2024_QSWorld_University_Rankings_top1000.csv"
+      "url": "https://raw.githubusercontent.com/Xyangh/3179a2/main/ass2/data/2024_QSWorld_University_Rankings_top1000.csv",
+      "format": {"type": "csv"}  
     },
     "transform": [
       {
@@ -22,13 +25,13 @@
         "sort": [{"field": "Number of university", "order": "descending"}]
       },
       {
-        "filter": "datum.rank <= Top_Countries"
+        "filter": "datum.rank <= Countries_num"
       }
     ],
     "params": [
       {
         "name": "Top_universities",
-        "value": 1000,
+        "value": 100,
         "bind": {
           "input": "range",
           "min": 100,
@@ -37,7 +40,7 @@
         }
       },
       {
-        "name": "Top_Countries",
+        "name": "Countries_num",
         "value": 20,
         "bind": {
           "input": "range",

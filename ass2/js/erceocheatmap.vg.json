@@ -1,0 +1,54 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "title": "Heatmap of Academic and Employer Reputation Scores for Top 100 Universities",
+    "width": 800,
+    "height": 600,
+    "data": {
+      "url": "https://raw.githubusercontent.com/Xyangh/3179a2/main/ass2/data/2024_QSWorld_University_Rankings_top1000.csv",
+      "format": {
+        "type": "csv"
+      }
+    },
+    "transform": [
+      {
+        "window": [{"op": "rank", "as": "rank"}],
+        "sort": [{"field": "Overall SCORE", "order": "descending"}]
+      },
+      {
+        "filter": "datum.rank <= 50"
+      }
+    ],
+    "mark": "rect",
+    "encoding": {
+      "x": {
+        "field": "Employment Outcomes Score",
+        "type": "quantitative",
+        "bin": true,
+        "axis": {
+          "title": "Employment Outcomes Score"
+        }
+      },
+      "y": {
+        "field": "Employer Reputation Score",
+        "type": "quantitative",
+        "bin": true,
+        "axis": {
+          "title": "Employer Reputation Score"
+        }
+      },
+      "color": {
+        "aggregate": "count",
+        "type": "quantitative",
+        "legend": {
+          "title": "Number of Universities"
+        }
+      },
+      "tooltip": [
+        {
+          "aggregate": "count",
+          "type": "quantitative",
+          "title": "Number of Universities"
+        }
+      ]
+    }
+  }

@@ -1,0 +1,83 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "title":"Globalization analysis by country",
+    "width": 275,
+    "height": 350,
+    "data": {
+      "url": "https://raw.githubusercontent.com/Xyangh/3179a2/main/ass2/data/2024_QSWorld_University_Rankings_top1000.csv",
+      "format": {
+        "type": "csv"
+      }
+    },
+    "transform": [
+      {
+        "filter": "datum['2024 RANK'] <= 50"
+      },
+      {
+        "aggregate": [
+          {
+            "op": "mean",
+            "field": "International Faculty Score",
+            "as": "International Faculty Avg"
+          },
+          {
+            "op": "mean",
+            "field": "International Students Score",
+            "as": "International Students Avg"
+          },
+          {
+            "op": "mean",
+            "field": "International Research Network Score",
+            "as": "International Research Network Avg"
+          }
+        ],
+        "groupby": ["Country"]
+      },
+      {
+        "fold": ["International Faculty Avg", "International Students Avg", "International Research Network Avg"],
+        "as": ["Category", "value"]
+      }
+    ],
+    "mark": "bar",
+    "params": [{
+      "name": "sort",
+      "select": {"type": "point", "fields": ["Category"]},
+      "bind": "legend"
+    }],
+    "encoding": {
+      "y": {
+        "field": "Country",
+        "type": "nominal",
+        "axis": {
+          "title": "Country"
+        }
+      },
+      "x": {
+        "field": "value",
+        "type": "quantitative",
+        "axis": {
+          "title": "Average Score"
+        },
+        "stack": true
+      },
+      "color": {
+        "field": "Category",
+        "type": "nominal",
+        "legend": {
+          "title": "Category"
+        },
+        "scale": {
+          "domain": ["International Faculty Avg", "International Students Avg", "International Research Network Avg"]
+        }
+      },
+      "opacity": {
+        "condition": {"param": "sort", "value": 1},
+        "value": 0.2
+      },
+      "tooltip": [
+        {"field": "Country", "type": "nominal"},
+        {"field": "Category", "type": "nominal"},
+        {"field": "value", "type": "quantitative", "format": ".2f"}
+      ]
+    }
+  }

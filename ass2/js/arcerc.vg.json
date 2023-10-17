@@ -1,0 +1,104 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "repeat": {
+    "column": ["Employment Outcomes Score", "Employer Reputation Score"],
+    "row": ["Academic Reputation Score"]
+  },
+  "spec": {
+  "width": 350,
+  "height": 275,
+    "data": {
+      "url": "https://raw.githubusercontent.com/Xyangh/3179a2/main/ass2/data/2024_QSWorld_University_Rankings_top1000.csv",
+      "format": {
+        "type": "csv"
+      }
+    },
+    "transform": [
+      {
+        "filter": "datum['2024 RANK'] <= 50"
+      },
+      {
+        "filter": {
+          "or": [
+            {"param": "selectedCountry", "empty": true},
+            {"field": "Country", "equal": {"param": "selectedCountry"}}
+          ]
+        }
+      }
+    ],
+    
+    "mark": "circle",
+    "params": [
+      {
+        "name": "selectedCountry",
+        "select": {"type": "point", "fields": ["Country"]},
+        "bind": "legend"
+      },
+      {
+        "name": "brush",
+        "select": {
+          "type": "interval",
+          "resolve": "union",
+          "on": "[mousedown[event.shiftKey], window:mouseup] > window:mousemove!",
+          "translate": "[mousedown[event.shiftKey], window:mouseup] > window:mousemove!",
+          "zoom": "wheel![event.shiftKey]"
+        }
+      },
+      {
+        "name": "grid",
+        "select": {
+          "type": "interval",
+          "resolve": "global",
+          "translate": "[mousedown[!event.shiftKey], window:mouseup] > window:mousemove!",
+          "zoom": "wheel![!event.shiftKey]"
+        },
+        "bind": "scales"
+      }
+    ],
+    "encoding": {
+      "x": {
+        "field": {
+          "repeat": "row"
+        },
+        "type": "quantitative"
+      },
+      "y": {
+        "field": {
+          "repeat": "column"
+        },
+        "type": "quantitative",
+        "axis": {
+          "minExtent": 30
+        }
+      },
+      "size": {"field": "Overall SCORE", "type": "quantitative"},
+      "color": {"field": "Country", "type": "nominal", "scale": {"scheme": "tableau20"}},
+      "opacity": {
+        "condition": {"param": "selectedCountry", "value": 1},
+        "value": 0.2
+      },
+      "tooltip": [
+        {
+          "field": "Institution Name",
+          "type": "nominal"
+        },
+        {
+          "field": {
+            "repeat": "row"
+          },
+          "type": "quantitative"
+        },
+        {
+          "field": {
+            "repeat": "column"
+          },
+          "type": "quantitative"
+        },
+        {
+          "field": "Country",
+          "type": "nominal"
+        }
+      ]
+    }
+  }
+}

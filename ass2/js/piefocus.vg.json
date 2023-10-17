@@ -1,0 +1,27 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "width": 150,
+    "height": 200,
+    "data": {
+      "url": "https://raw.githubusercontent.com/Xyangh/3179a2/main/ass2/data/2024_QSWorld_University_Rankings_top1000.csv",  
+      "format": {"type": "csv"}  
+    },
+  "transform": [
+      {
+        "filter": "datum['2024 RANK'] <= 100"
+      },
+      {
+        "aggregate": [{"op": "count", "as": "Number of Universities"}],
+        "groupby": ["FOCUS"]
+      }
+    ],
+    "mark": "arc",
+    "encoding": {
+      "theta": {"field": "Number of Universities", "type": "quantitative"},
+      "color": {"field": "FOCUS", "type": "nominal", "legend": {"title": "FOCUS of Universities"}},
+      "tooltip": [
+        {"field": "FOCUS", "title": "Age Group"},
+        {"field": "Number of Universities", "title": "Number of Universities", "type": "quantitative"}
+      ]
+    }
+  }

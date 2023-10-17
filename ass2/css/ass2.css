@@ -13,6 +13,7 @@ body {
     font-size: 3em;  
     color: #222;  
     text-align: center;
+    width: auto;
     letter-spacing: 1px;
     margin: 0;  
 }
